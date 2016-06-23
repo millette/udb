@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta content="en" />
+<meta name="description" content="Create characters for your stories in 2D vector graphics. Using drop-down menus, create and share characters with your co-creators and readers." />
+<meta name="author" content="Frederic Guimont" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Character Creator | About</title>
+<link rel="stylesheet" href="css/styles.css" />
+<meta name="google-site-verification" content="seSsFvgHZ7H8BEK2oi7_E7rMPgrv94Qj59pkTwuw8yQ" />
+</head>
+<body>
+  <h1 id="hiname">Hi</h1>
+  <div>
+    <h1>Register</h1>
+    <form id="register">
+      <label>username: <input required type="text" name="name"></label><br>
+      <label>email: <input required type="email" name="email"></label><br>
+      <label>password: <input required type="password" name="password"></label><br>
+      <label>password (bis): <input required type="password" name="passwordBis"></label><br>
+      <input type="submit" value="Register">
+    </form>
+  </div>
+
+  <div>
+    <h1>Login</h1>
+    <form id="login" method="post" action="api/_session?next=/ok.html">
+      <label>username: <input required type="text" name="name"></label><br>
+      <label>password: <input required type="password" name="password"></label><br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  <div>
+    <h1>Logout</h1>
+    <form id="logout">
+      <button>Logout</button>
+    </form>
+  </div>
+
+  <footer>
+  <p>Copyright &#xA9; 2013-2016 Frédéric Guimont, all rights reserved. Contact:  <a href="mailto:info@charactercreator.org">info@charactercreator.org</a></p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-47040938-1', 'charactercreator.org');
+    ga('send', 'pageview');
+  </script>
+  <script type="text/javascript" src="bower_components/es6-promise/promise.min.js"></script>
+  <script type="text/javascript" src="bower_components/fetch/fetch.js"></script>
+  <script type="text/javascript" src="dist/session.js"></script>
+</div>
+</body>
