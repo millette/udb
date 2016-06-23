@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     var pair
     var obj = { }
     var fd = new FormData(el)
-
     for (pair of fd.entries()) { obj[pair[0]] = pair[1] }
     return obj
   }
@@ -41,7 +40,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
       logoutEl.parentNode.className = 'visibleForm'
       loginEl.parentNode.className = 'hiddenForm'
       registerEl.parentNode.className = 'hiddenForm'
-      hinameEl.innerHTML = 'Hi ' + userCtx.name
+      getJSON('/api/_users/org.couchdb.user:' + userCtx.name)
+        .then(function (json) {
+          console.log('parsed json#2', json)
+          hinameEl.innerHTML = 'Hi ' + userCtx.name + ' (' + json.email + ')'
+        })
     } else {
       console.log('not logged in')
       logoutEl.parentNode.className = 'hiddenForm'
@@ -104,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     // we should first check that the email is not already in use
     // let's create the user!
-    putJSON('/api/_users/org.couchdb.user:' + obj.name , obj)
+    putJSON('/api/_users/org.couchdb.user:' + obj.name, obj)
       .then(function (response) {
         console.log('response:', response)
         switch (response.status) {
