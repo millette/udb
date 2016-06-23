@@ -8,10 +8,21 @@ de devoir aussi configurer https dans CouchDB et dans nginx.
 On dépend de deux polyfills, fetch() et Promise() qui sont
 déjà implémenter dans les fureteurs populaires.
 
+## Config CouchDB
 CouchDB doit être configurer *out of the box* puis en créant au moins
 un administrateur, pour sortir du mode *admin party*. Il ne devrait
 écouter que sur localhost et non sur le réseau public.
 
+### Facultatif pour la démo actuelle
+Pour rendre certains champs d'un doc ```user``` public
+visitez <http://localhost:5984/_utils/config.html>.
+
+Dans la section ```couch_httpd_auth```,
+ajoutez une option ```public_fields```
+avec la valeur "name" (par exemple) pour rendre le champ
+```name``` d'un doc ```user``` public.
+
+## Config Nginx
 Côté nginx, une fois https configuré sur un sous-domaine,
 ajoutez un section comme
 
@@ -24,6 +35,7 @@ location /api/ {
 }
 ```
 
+## Démonstration
 La page web devrait afficher deux formulaires:
 
 * Register
