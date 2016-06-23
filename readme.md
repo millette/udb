@@ -27,12 +27,19 @@ Côté nginx, une fois https configuré sur un sous-domaine,
 ajoutez un section comme
 
 ```
-location /api/ {
-  proxy_pass http://localhost:5984/;
-  proxy_redirect off;
-  proxy_set_header Host $host;
-  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
+  location /api/_session {
+    proxy_pass http://localhost:5984/_session;
+    proxy_redirect off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+  location /api/_users/ {
+    proxy_pass http://localhost:5984/_users/;
+    proxy_redirect off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
 ```
 
 ## Démonstration
