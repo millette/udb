@@ -39,38 +39,42 @@ document.addEventListener('DOMContentLoaded', function (event) {
   var setup = function (userCtx) {
     if (userCtx.name) {
       console.log('logged in')
-      profileEl.parentNode.className = 'visibleForm'
-      logoutEl.parentNode.className = 'visibleForm'
-      loginEl.parentNode.className = 'hiddenForm'
-      registerEl.parentNode.className = 'hiddenForm'
+      if (profileEl) { profileEl.parentNode.className = 'visibleForm' }
+      if (logoutEl) { logoutEl.parentNode.className = 'visibleForm' }
+      if (loginEl) { loginEl.parentNode.className = 'hiddenForm' }
+      if (registerEl) { registerEl.parentNode.className = 'hiddenForm' }
       getJSON('/api/_users/org.couchdb.user:' + userCtx.name)
         .then(function (json) {
           var preEl = document.createElement('pre')
           var hash = location.hash.slice(1) || false
-          console.log('old hash:', json.hash || false)
+          // console.log('old hash:', json.hash || false)
           if (hash && json.hash !== hash) {
-            console.log('new hash:', hash)
+            // console.log('new hash:', hash)
             json.hash = hash
             putJSON('/api/_users/org.couchdb.user:' + json.name, json)
               .then(function (response) {
                 console.log('response #3:', response)
+                // TODO show update confirmation to the user
               })
           }
 
           console.log('parsed json#2', json)
-          hinameEl.innerHTML = 'Hi ' + userCtx.name + ' (' + json.email + ')'
+          if (hinameEl) {
+            hinameEl.innerHTML = 'Hi ' + userCtx.name + ' (' + json.email + ')'
+          }
           preEl.innerHTML = JSON.stringify(json, null, ' ')
-          profileinfoEl.innerHTML = ''
-          profileinfoEl.appendChild(preEl)
-          console.log('location', location.hash)
+          if (profileinfoEl) {
+            profileinfoEl.innerHTML = ''
+            profileinfoEl.appendChild(preEl)
+          }
         })
     } else {
       console.log('not logged in')
-      profileEl.parentNode.className = 'hiddenForm'
-      logoutEl.parentNode.className = 'hiddenForm'
-      loginEl.parentNode.className = 'visibleForm'
-      registerEl.parentNode.className = 'visibleForm'
-      hinameEl.innerHTML = 'Hi'
+      if (profileEl) { profileEl.parentNode.className = 'hiddenForm' }
+      if (logoutEl) { logoutEl.parentNode.className = 'hiddenForm' }
+      if (loginEl) { loginEl.parentNode.className = 'visibleForm' }
+      if (registerEl) { registerEl.parentNode.className = 'visibleForm' }
+      if (hinameEl) { hinameEl.innerHTML = 'Hi' }
     }
   }
 
@@ -85,48 +89,53 @@ document.addEventListener('DOMContentLoaded', function (event) {
       setup(json.userCtx)
     })
 
-  logoutEl.addEventListener('submit', function (event) {
+  logoutEl && logoutEl.addEventListener('submit', function (event) {
     event.preventDefault()
     deleteJSON('/api/_session')
       .then(function (response) {
         console.log('LOGOUT response:', response)
         setup(response)
+        // TODO show logout confirmation to the user
       })
   })
 
-  loginEl.addEventListener('submit', function (event) {
+  loginEl && loginEl.addEventListener('submit', function (event) {
     var obj = formToJSON(this)
     event.preventDefault()
     console.log('form obj:', obj)
     if (!obj.name || !obj.password) {
       console.log('missing fields')
+      // TODO show message to the user
       return
     }
     postJSON('/api/_session', obj)
       .then(function (response) {
         console.log('LOGIN response:', response)
         setup(response)
+        // TODO show login confirmation to the user
       })
   })
 
-  registerEl.addEventListener('submit', function (event) {
+  registerEl && registerEl.addEventListener('submit', function (event) {
     var obj = formToJSON(this)
     event.preventDefault()
     console.log('form obj:', obj)
     if (!obj.name || !obj.email || !obj.password || !obj.passwordBis) {
       console.log('missing fields')
+      // TODO show message to the user
       return
     }
     if (obj.password !== obj.passwordBis) {
       console.log('passwords don\'t match')
+      // TODO show message to the user
       return
     }
     delete obj.passwordBis
     obj.roles =  []
     obj.type = 'user'
 
-    // we should first check that the email is not already in use
-    // let's create the user!
+    // TODO we should first check that the email is not already in use
+    // For now, let's try to create the user anyway
     putJSON('/api/_users/org.couchdb.user:' + obj.name, obj)
       .then(function (response) {
         console.log('response:', response)
@@ -138,12 +147,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
               .then(function (response) {
                 console.log('LOGIN response:', response)
                 setup(response)
+                // TODO show login confirmation to the user
               })
             break;
 
           case 409:
             // name is already taken
             console.log(response.statusText, obj.name)
+            // TODO show message to the user
             break;
 
           default:
