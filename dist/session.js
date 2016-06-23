@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function (event) {
   'use strict'
 
-  var hinameEl = document.querySelector('h1#hiname')
-  var logoutEl = document.querySelector('form#logout')
-  var loginEl = document.querySelector('form#login')
-  var registerEl = document.querySelector('form#register')
+  var hinameEl = document.querySelector('#hiname')
+  var logoutEl = document.querySelector('#logout')
+  var loginEl = document.querySelector('#login')
+  var registerEl = document.querySelector('#register')
+  var profileEl = document.querySelector('#profile')
+  var profileinfoEl = document.querySelector('#profileinfo')
 
   var httpJSON = function (method, u, o) {
     var it = {
@@ -37,16 +39,34 @@ document.addEventListener('DOMContentLoaded', function (event) {
   var setup = function (userCtx) {
     if (userCtx.name) {
       console.log('logged in')
+      profileEl.parentNode.className = 'visibleForm'
       logoutEl.parentNode.className = 'visibleForm'
       loginEl.parentNode.className = 'hiddenForm'
       registerEl.parentNode.className = 'hiddenForm'
       getJSON('/api/_users/org.couchdb.user:' + userCtx.name)
         .then(function (json) {
+          var preEl = document.createElement('pre')
+          var hash = location.hash.slice(1) || false
+          console.log('old hash:', json.hash || false)
+          if (hash && json.hash !== hash) {
+            console.log('new hash:', hash)
+            json.hash = hash
+            putJSON('/api/_users/org.couchdb.user:' + json.name, json)
+              .then(function (response) {
+                console.log('response #3:', response)
+              })
+          }
+
           console.log('parsed json#2', json)
           hinameEl.innerHTML = 'Hi ' + userCtx.name + ' (' + json.email + ')'
+          preEl.innerHTML = JSON.stringify(json, null, ' ')
+          profileinfoEl.innerHTML = ''
+          profileinfoEl.appendChild(preEl)
+          console.log('location', location.hash)
         })
     } else {
       console.log('not logged in')
+      profileEl.parentNode.className = 'hiddenForm'
       logoutEl.parentNode.className = 'hiddenForm'
       loginEl.parentNode.className = 'visibleForm'
       registerEl.parentNode.className = 'visibleForm'
