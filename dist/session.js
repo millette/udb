@@ -80,16 +80,23 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
 
+  var isLoggedIn = function () {
+    // are we logged in?
+    getJSON('/api/_session')
+      .then(function (json) {
+        console.log('parsed json', json.userCtx)
+        // simplest: json.userCtx.name is truthy
+        // more involved: json.userCtx.roles.indexOf('NEEDED_ROLE_FOR_APP') !== -1
+        setup(json.userCtx)
+      })
+  }
+
   console.log('ready')
 
-  // are we logged in?
-  getJSON('/api/_session')
-    .then(function (json) {
-      console.log('parsed json', json.userCtx)
-      // simplest: json.userCtx.name is truthy
-      // more involved: json.userCtx.roles.indexOf('NEEDED_ROLE_FOR_APP') !== -1
-      setup(json.userCtx)
-    })
+  isLoggedIn()
+  // section couch_httpd_auth, option timeout (600 seconds by default)
+  // refresh session cookie to prevent automatic logout after 10 minutes
+  setInterval(isLoggedIn, 540000) // 9 minutes
 
   logoutEl && logoutEl.addEventListener('submit', function (event) {
     event.preventDefault()
