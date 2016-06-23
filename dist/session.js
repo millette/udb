@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 console.log('response #3:', response)
                 // TODO show update confirmation to the user
               })
+          } else if (json.hash) {
+            location.hash = '#' + json.hash
           }
 
           console.log('parsed json#2', json)
