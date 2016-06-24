@@ -82,6 +82,10 @@ Autrement, *Stackoverflow* offre quelques pistes sur les champs uniques:
 Enfin, un service (nodejs ou autre) pourrait être placé devant CouchDB
 pour offrir les fonctionnalités nécessaires.
 
+## Notes supplémentaires sur CouchDB
+* [Authentication][]
+* [Security][]
+
 ## TODO
 * Afficher des messages à l'utilisateur (mauvais password, email existant, etc.)
 * Vérifier email (confirmation par email et pour doublons dans la db)
@@ -90,3 +94,5 @@ pour offrir les fonctionnalités nécessaires.
 
 [Couchdb - how to set a field containing unique key]: <http://stackoverflow.com/questions/21531624/couchdb-how-to-set-a-field-containing-unique-key>
 [Unique constraints in couchdb]: <http://stackoverflow.com/questions/1541239/unique-constraints-in-couchdb>
+[Security]: <http://docs.couchdb.org/en/1.6.1/intro/security.html>
+[Authentication]: <http://docs.couchdb.org/en/1.6.1/api/server/authn.html>
