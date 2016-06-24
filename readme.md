@@ -67,8 +67,26 @@ le champ "hash" et la valeur **allo**. Si on se déplace vers #bonjour
 
 Voilà pour la démo.
 
+## À propos du champ email
+CouchDB n'est pas SQL. Sans schemas, pas si simple de déclarer un champ
+unique. Les documents d'une DB on une clé primaire (unique), le champ
+```_id``` et c'est tout. Si on utilise ```_id``` pour stocker le
+*username*, il faut trouver un autre moyen pour assurer des emails uniques.
+
+Une solution simple et incomplète serait d'utiliser l'email comme username.
+
+Autrement, *Stackoverflow* offre quelques pistes sur les champs uniques:
+* [Couchdb - how to set a field containing unique key][]
+* [Unique constraints in couchdb][]
+
+Enfin, un service (nodejs ou autre) pourrait être placé devant CouchDB
+pour offrir les fonctionnalités nécessaires.
+
 ## TODO
 * Afficher des messages à l'utilisateur (mauvais password, email existant, etc.)
 * Vérifier email (confirmation par email et pour doublons dans la db)
 * Utiliser les rôles CouchDB pour controler les utilisateurs qui peuvent utiliser le site
 * Integrer au vrai site; grosso moder tracker le hash pis that's it :-)
+
+[Couchdb - how to set a field containing unique key]: <http://stackoverflow.com/questions/21531624/couchdb-how-to-set-a-field-containing-unique-key>
+[Unique constraints in couchdb]: <http://stackoverflow.com/questions/1541239/unique-constraints-in-couchdb>
