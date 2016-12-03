@@ -6,10 +6,10 @@ pour ne configurer https qu'à un seul endroit, dans nginx, au lieu
 de devoir aussi configurer https dans CouchDB et dans nginx.
 
 On dépend de deux polyfills, fetch() et Promise() qui sont
-déjà implémenter dans les fureteurs populaires.
+déjà implémentés dans les fureteurs populaires.
 
 ## Config CouchDB
-CouchDB doit être configurer *out of the box* puis en créant au moins
+CouchDB doit être configuré *out of the box* puis en créant au moins
 un administrateur, pour sortir du mode *admin party*. Il ne devrait
 écouter que sur localhost et non sur le réseau public.
 
@@ -50,9 +50,9 @@ La page web devrait afficher deux formulaires:
 
 Il n'y a probablement pas de user, alors on commence par Register.
 
-Une fois complétée (un nom d'utilisateur nouveau, un password bien répété,
+Une fois complété (un nom d'utilisateur nouveau, un password bien répété,
 mais notez qu'on ne vérifie pas le email pour les doublons), les deux
-formulaires Register et Login devraient disparaitre et être remplacé par
+formulaires Register et Login devraient disparaître et être remplacé par
 l'info sur l'utilisateur et un bouton logout.
 
 Le bouton logout va remplacer à son tour les infos du user par les
